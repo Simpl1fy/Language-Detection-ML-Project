@@ -55,5 +55,43 @@ class DataTransformation:
                 ]
             )
 
+            return preprocessor
+
+        except Exception as e:
+            raise CustomException(e, sys)
+
+
+        # Creating a function for initiating data transformation
+    def initiate_data_transformation(self, train_path, test_path):
+
+        try:
+            train_df = pd.read_csv(train_path)
+            test_df = pd.read_csv(test_path)
+
+            logging.info("Reading the training and testing csv into a dataframe")
+
+            logging.info("Obtaining preprocessing object")
+
+            preprocessing_obj=self.get_data_transformation_object()
+
+            target_column_name = "Language"
+            input_column_name = "Text"
+
+            logging.info("Applying the preprocessor object to training and testing dataset")
+
+            train_arr = preprocessing_obj.fit_transform(train_df)
+            test_arr = preprocessing_obj.fit_transform(test_df)
+
+            logging.info("Saving the preprocessing object")
+            save_object(
+                
+            )
+
+            return (
+                train_arr,
+                test_arr
+            )
+
         except:
             pass
+            
