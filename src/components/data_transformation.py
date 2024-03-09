@@ -12,6 +12,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from src.logger import logging
 from src.exception import CustomException
+from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
@@ -84,14 +85,15 @@ class DataTransformation:
 
             logging.info("Saving the preprocessing object")
             save_object(
-                
+                file_path = self.data_transfomation_config_obj.preprocessor_obj_file_path
+                obj = preprocessing_obj
             )
 
             return (
                 train_arr,
-                test_arr
+                test_arr,
+                self.data_transfomation_config_obj.preprocessor_obj_file_path
             )
-
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e, sys)
             
